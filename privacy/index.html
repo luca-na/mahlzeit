@@ -9,9 +9,9 @@
 </head>
 <body>
 <!--
-  DRAFT — written from what the app does as of 2026-10-25 (ux-oct-2026). Not legal
-  advice; have it checked. Fill every .todo before publishing. Statements marked
-  "phase 0" depend on work not shipped yet (account deletion, retention purges).
+  Written from what the app and its server do as of build 31 (2026-11-14).
+  Not legal advice. Keep in sync with supabase/migrations and the edge functions
+  in the app repo whenever data handling changes.
 -->
 <header class="site">
   <a class="brand" href="../"><img src="../icon.png" alt="">Mahlzeit</a>
@@ -19,102 +19,125 @@
 </header>
 <main>
   <h1>Datenschutzerklärung</h1>
-  <p class="muted">Stand: <span class="todo">[Datum der Veröffentlichung]</span></p>
+  <p class="muted">Stand: 14. November 2026</p>
   <p class="lang-switch"><a href="#en">English version below</a></p>
 
   <h2>Kurz gesagt</h2>
   <ul>
     <li>Ohne Konto bleiben deine Rezepte ausschließlich auf deinem Gerät.</li>
-    <li>Mit Konto werden deine Rezepte auf Servern in der EU (Frankfurt) gespeichert, damit sie zwischen deinen Geräten und in deinem Haushalt synchronisiert werden.</li>
+    <li>Mit Konto werden deine Rezepte und deine Einkaufsliste auf Servern in der EU (Frankfurt) gespeichert, damit sie zwischen deinen Geräten und in deinem Haushalt synchronisiert werden.</li>
     <li>Für KI-Funktionen wird der Rezepttext an Anthropic übermittelt.</li>
     <li>Keine Werbung, keine Analyse-Tools, kein Tracking.</li>
+    <li>Du kannst dein Konto jederzeit in der App löschen.</li>
   </ul>
 
   <h2>Verantwortlicher</h2>
   <p>Luca Nagel<br>
-    <span class="todo">[Straße Hausnummer]</span><br>
-    <span class="todo">[PLZ Ort]</span>, Deutschland<br>
-    E-Mail: <span class="todo">[Kontakt-E-Mail]</span></p>
+    L4, 9<br>
+    68161 Mannheim, Deutschland<br>
+    E-Mail: <a href="mailto:nagel.luca@googlemail.com">nagel.luca@googlemail.com</a></p>
 
   <h2>Nutzung ohne Konto</h2>
   <p>Rezepte, Notizen, Fotos, Gruppen, die Einkaufsliste, Kochsitzungen und Einstellungen werden lokal auf deinem Gerät gespeichert und nicht an uns übertragen.</p>
   <p>Wenn du ein Rezept importierst, ruft die App die geteilte Webseite (z.&nbsp;B. einen Blog oder Instagram-Beitrag) direkt von deinem Gerät aus ab. Dabei gelten die Datenschutzbestimmungen der jeweiligen Seite; wir erhalten diese Daten nicht.</p>
-  <p>Kamera und Fotomediathek werden nur genutzt, wenn du selbst ein Foto zu einem Rezept oder Schritt hinzufügst. Benachrichtigungen werden nur lokal für deine Koch-Timer verwendet.</p>
+  <p>Kamera und Fotomediathek werden nur genutzt, wenn du selbst ein Foto zu einem Rezept oder Schritt hinzufügst. Benachrichtigungen werden nur lokal auf dem Gerät für deine Koch-Timer verwendet.</p>
 
   <h2>Konto (Mit Apple anmelden)</h2>
   <p>Für Synchronisation, Haushalte, Teilen-Links und KI-Funktionen kannst du dich mit „Mit Apple anmelden“ registrieren. Wir erhalten dabei von Apple eine Nutzerkennung und – falls du sie freigibst – deine E-Mail-Adresse bzw. eine von Apple erzeugte Weiterleitungsadresse. Rechtsgrundlage ist die Erfüllung des Nutzungsvertrags (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO).</p>
 
-  <h2>Synchronisation und Haushalt</h2>
-  <p>Wenn du angemeldet bist, speichern wir deine Rezepte (inkl. Zutaten, Schritten, Notizen, Gruppen, Übersetzungen) sowie hinzugefügte Fotos, um sie zwischen deinen Geräten abzugleichen. Einkaufsliste, Kochsitzungen und Einstellungen bleiben auf dem Gerät.</p>
-  <p>Wenn du einen Haushalt gründest oder ihm beitrittst, können alle Mitglieder die Rezepte der anderen Mitglieder sehen. Einladungslinks sind einmalig nutzbar und laufen nach 7 Tagen ab.</p>
+  <h2>Synchronisation</h2>
+  <p>Wenn du angemeldet bist, speichern wir deine Rezepte (Titel, Zutaten, Schritte, Notizen, Übersetzungen, Quell-Link) und die Fotos, die du hinzufügst, um sie zwischen deinen Geräten abzugleichen. Persönliche Angaben zu Rezepten – Favoriten, Gruppen und wie oft bzw. wann du ein Rezept gekocht hast – speichern wir getrennt davon und nur für dich sichtbar.</p>
+  <p>Auch deine Einkaufsliste wird synchronisiert (Eintrag, ggf. zugehöriges Rezept, abgehakt oder nicht). Kochsitzungen und Einstellungen bleiben auf dem Gerät.</p>
+  <p>Fotos, die zu keinem Rezept mehr gehören, werden wöchentlich automatisch gelöscht.</p>
+
+  <h2>Haushalt</h2>
+  <p>Wenn du einen Haushalt gründest oder ihm beitrittst, speichern wir deine Mitgliedschaft und den Namen, den du dafür angibst. Die anderen Mitglieder sehen diesen Namen.</p>
+  <p>Deine Rezepte bleiben privat, bis du ein Rezept ausdrücklich mit dem Haushalt teilst. Geteilte Rezepte können alle Mitglieder sehen und bearbeiten; dabei wird gespeichert, wer zuletzt geändert hat. Der Haushalt hat eine gemeinsame Einkaufsliste, die alle Mitglieder in Echtzeit sehen und ändern können.</p>
+  <p>Einladungslinks sind einmalig nutzbar und 7 Tage gültig.</p>
 
   <h2>Teilen-Links</h2>
-  <p>Wenn du ein einzelnes Rezept teilst, speichern wir eine Kopie dieses Rezepts. Jede Person mit dem Link kann es 30 Tage lang abrufen, auch ohne Konto. <span class="todo">[Phase 0: danach automatisch gelöscht]</span></p>
+  <p>Wenn du ein einzelnes Rezept per Link teilst, speichern wir eine Kopie dieses Rezepts. Jede Person mit dem Link kann es abrufen, auch ohne Konto. Nach 30 Tagen wird die Kopie automatisch gelöscht.</p>
+  <p>Teilen- und Einladungslinks führen über diese Website. Der Link-Code steht dabei hinter einem „#“ und wird deshalb nicht an den Webserver übertragen.</p>
 
   <h2>KI-Funktionen</h2>
-  <p>Funktionen wie „Optimieren“, das automatische Aufräumen beim Import, Übersetzen, „Mit KI organisieren“ und die Rezeptübersicht im Kochmodus stehen nur angemeldet zur Verfügung. Dabei wird der Inhalt des betroffenen Rezepts (bzw. beim Organisieren die Titel und Gruppen deiner Bibliothek) über unseren Server an die Anthropic PBC, USA, übermittelt und das Ergebnis an die App zurückgegeben. Deine E-Mail-Adresse wird dabei nicht übermittelt. Nach den kommerziellen Bedingungen von Anthropic werden diese Daten nicht zum Training von KI-Modellen verwendet.</p>
-  <p>Um Missbrauch zu verhindern, protokollieren wir zu jedem KI-Aufruf deine Nutzerkennung, die Art der Funktion und den Zeitpunkt. <span class="todo">[Phase 0: Einträge werden nach 30 Tagen gelöscht]</span></p>
-  <p>Rechtsgrundlage ist die Erfüllung des Nutzungsvertrags (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO) bzw. für die Missbrauchsprotokollierung unser berechtigtes Interesse (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO).</p>
+  <p>Funktionen wie „Optimieren“, das automatische Aufräumen beim Import, Übersetzen, „Mit KI organisieren“ und die Rezeptübersicht im Kochmodus stehen nur angemeldet zur Verfügung. Dabei wird der Inhalt des betroffenen Rezepts (bzw. beim Organisieren die Titel und Gruppen deiner Bibliothek) über unseren Server an die Anthropic PBC, USA, übermittelt und das Ergebnis an die App zurückgegeben. Deine E-Mail-Adresse und dein Name werden dabei nicht übermittelt. Nach den kommerziellen Bedingungen von Anthropic werden diese Daten nicht zum Training von KI-Modellen verwendet.</p>
+  <p>Um Missbrauch zu verhindern, protokollieren wir zu jedem KI-Aufruf deine Nutzerkennung, die Art der Funktion und den Zeitpunkt. Diese Einträge werden nach 30 Tagen automatisch gelöscht.</p>
+  <p>Rechtsgrundlage ist die Erfüllung des Nutzungsvertrags (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO) bzw. für die Missbrauchsprotokollierung unser berechtigtes Interesse an einem sicheren und bezahlbaren Betrieb (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO).</p>
 
   <h2>Dienstleister</h2>
   <ul>
-    <li><strong>Supabase Inc.</strong> – Datenbank, Speicher, Anmeldung und Server-Funktionen. Die Daten liegen in der Region EU (Frankfurt). Supabase verarbeitet technische Zugriffsdaten (z.&nbsp;B. IP-Adresse, Zeitpunkt) in Server-Protokollen.</li>
+    <li><strong>Supabase Inc.</strong>, USA – Datenbank, Speicher, Anmeldung und Server-Funktionen. Die Daten liegen in der Region EU (Frankfurt). Supabase verarbeitet technische Zugriffsdaten (z.&nbsp;B. IP-Adresse, Zeitpunkt) in Server-Protokollen.</li>
     <li><strong>Anthropic PBC</strong>, USA – Verarbeitung der KI-Funktionen.</li>
-    <li><strong>Apple</strong> – „Mit Apple anmelden“; es gelten zusätzlich die Datenschutzbestimmungen von Apple.</li>
+    <li><strong>Apple Inc.</strong> – „Mit Apple anmelden“; es gelten zusätzlich die Datenschutzbestimmungen von Apple.</li>
+    <li><strong>GitHub Inc.</strong>, USA – Hosting dieser Website (GitHub Pages). Beim Aufruf verarbeitet GitHub technische Zugriffsdaten wie die IP-Adresse, um die Seite auszuliefern und abzusichern (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO).</li>
   </ul>
-  <p>Mit unseren Dienstleistern bestehen Verträge zur Auftragsverarbeitung. Übermittlungen in die USA erfolgen auf Grundlage der EU-Standardvertragsklauseln bzw. des EU-U.S. Data Privacy Framework. <span class="todo">[prüfen: DPAs mit Supabase und Anthropic abgeschlossen?]</span></p>
+  <p>Mit unseren Dienstleistern bestehen Verträge zur Auftragsverarbeitung bzw. gelten deren Datenverarbeitungsbedingungen. Übermittlungen in die USA erfolgen auf Grundlage des EU-U.S. Data Privacy Framework bzw. der EU-Standardvertragsklauseln.</p>
 
-  <h2>Speicherdauer und Löschung</h2>
-  <p>Kontodaten und synchronisierte Rezepte speichern wir, bis du sie löschst oder dein Konto löschst. Du kannst dein Konto jederzeit in der App unter Einstellungen löschen; dabei werden alle zugehörigen Daten auf unseren Servern entfernt und die Verknüpfung mit deiner Apple-ID aufgehoben. <span class="todo">[Phase 0: Konto löschen in der App]</span> Lokale Daten entfernst du, indem du die App löschst.</p>
+  <h2>Speicherdauer und Konto löschen</h2>
+  <p>Kontodaten, synchronisierte Rezepte und die Einkaufsliste speichern wir, bis du sie löschst oder dein Konto löschst. Teilen-Links und das KI-Protokoll werden nach 30 Tagen gelöscht.</p>
+  <p>Du kannst dein Konto jederzeit in der App unter <em>Einstellungen → Konto löschen</em> löschen. Dabei entfernen wir von unseren Servern: deine Rezepte (auch die, die du mit dem Haushalt geteilt hast), deine Fotos, deine persönlichen Rezeptangaben, deine persönliche Einkaufsliste, deine Teilen- und Einladungslinks, dein KI-Protokoll, deine Haushaltsmitgliedschaft und dein Konto selbst; die Verknüpfung mit deiner Apple-ID wird aufgehoben. Hast du einen Haushalt gegründet, geht er an ein anderes Mitglied über oder wird gelöscht, wenn du das letzte Mitglied warst. Einträge auf der gemeinsamen Einkaufsliste gehören dem Haushalt und bleiben für die übrigen Mitglieder erhalten.</p>
+  <p>Die Rezepte auf deinem Gerät bleiben erhalten; sie entfernst du, indem du die App löschst.</p>
 
   <h2>Deine Rechte</h2>
-  <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit (die App bietet einen Export deiner Rezepte) und Widerspruch. Wende dich dafür an die oben genannte E-Mail-Adresse. Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren.</p>
+  <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit (die App bietet einen Export deiner Rezepte) und Widerspruch gegen Verarbeitungen auf Grundlage berechtigter Interessen. Wende dich dafür an die oben genannte E-Mail-Adresse. Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren.</p>
+
+  <h2>Änderungen</h2>
+  <p>Wenn sich die App oder die Rechtslage ändert, passen wir diese Erklärung an. Es gilt die jeweils hier veröffentlichte Fassung.</p>
 
   <hr id="en">
 
   <section lang="en">
   <h1>Privacy Policy</h1>
-  <p class="muted">Last updated: <span class="todo">[publication date]</span>. In case of doubt, the German version applies.</p>
+  <p class="muted">Last updated: 14 November 2026. In case of doubt, the German version applies.</p>
 
   <h2>In short</h2>
   <ul>
     <li>Without an account, your recipes stay on your device only.</li>
-    <li>With an account, your recipes are stored on servers in the EU (Frankfurt) so they sync between your devices and your household.</li>
+    <li>With an account, your recipes and your shopping list are stored on servers in the EU (Frankfurt) so they sync between your devices and your household.</li>
     <li>For AI features, recipe text is sent to Anthropic.</li>
     <li>No ads, no analytics, no tracking.</li>
+    <li>You can delete your account in the app at any time.</li>
   </ul>
 
   <h2>Controller</h2>
-  <p>Luca Nagel, <span class="todo">[street, postcode, city]</span>, Germany · Email: <span class="todo">[contact email]</span></p>
+  <p>Luca Nagel, L4, 9, 68161 Mannheim, Germany · Email: <a href="mailto:nagel.luca@googlemail.com">nagel.luca@googlemail.com</a></p>
 
   <h2>Using the app without an account</h2>
-  <p>Recipes, notes, photos, groups, the shopping list, cooking sessions and settings are stored locally on your device and are not sent to us. When you import a recipe, the app fetches the shared web page (e.g. a blog or Instagram post) directly from your device; that site's privacy policy applies and we do not receive this data. Camera and photo library are used only when you add a photo yourself. Notifications are used locally for your cooking timers only.</p>
+  <p>Recipes, notes, photos, groups, the shopping list, cooking sessions and settings are stored locally on your device and are not sent to us. When you import a recipe, the app fetches the shared web page (e.g. a blog or Instagram post) directly from your device; that site's privacy policy applies and we do not receive this data. Camera and photo library are used only when you add a photo yourself. Notifications are used locally on the device for your cooking timers only.</p>
 
   <h2>Account (Sign in with Apple)</h2>
   <p>Sync, households, share links and AI features require signing in with Apple. Apple provides us with a user identifier and, if you choose to share it, your email address or an Apple relay address. Legal basis: performance of contract (Art. 6(1)(b) GDPR).</p>
 
-  <h2>Sync and households</h2>
-  <p>When signed in, we store your recipes (ingredients, steps, notes, groups, translations) and the photos you add, to sync them between your devices. The shopping list, cooking sessions and settings stay on the device. Members of a household can see each other's recipes. Invite links are single-use and expire after 7 days.</p>
+  <h2>Sync</h2>
+  <p>When signed in, we store your recipes (title, ingredients, steps, notes, translations, source link) and the photos you add, to sync them between your devices. Personal recipe details – favorites, groups, and how often and when you cooked a recipe – are stored separately and visible to you only. Your shopping list is synced too (item, related recipe if any, checked or not). Cooking sessions and settings stay on the device. Photos no longer attached to any recipe are deleted automatically every week.</p>
+
+  <h2>Households</h2>
+  <p>When you create or join a household, we store your membership and the name you enter for it; other members see that name. Your recipes stay private until you explicitly share a recipe with the household. Shared recipes can be seen and edited by all members, and we record who changed them last. The household has one shopping list that all members see and change in real time. Invite links are single-use and valid for 7 days.</p>
 
   <h2>Share links</h2>
-  <p>When you share a single recipe, we store a copy of it. Anyone with the link can open it for 30 days, without an account. <span class="todo">[phase 0: deleted automatically afterwards]</span></p>
+  <p>When you share a single recipe by link, we store a copy of it. Anyone with the link can open it, without an account. The copy is deleted automatically after 30 days. Share and invite links pass through this website; the link code sits after a "#" and is therefore never sent to the web server.</p>
 
   <h2>AI features</h2>
-  <p>Optimize, automatic tidy-up on import, translation, organize-with-AI and the recipe overview in cook mode are available only when signed in. The content of the recipe concerned (for organizing: the titles and groups of your library) is sent via our server to Anthropic PBC, USA, and the result is returned to the app. Your email address is not sent. Under Anthropic's commercial terms this data is not used to train AI models. To prevent abuse, we log your user identifier, the feature and the time of each AI call. <span class="todo">[phase 0: entries deleted after 30 days]</span> Legal basis: Art. 6(1)(b) GDPR, and our legitimate interest (Art. 6(1)(f) GDPR) for abuse logging.</p>
+  <p>Optimize, automatic tidy-up on import, translation, organize-with-AI and the recipe overview in cook mode are available only when signed in. The content of the recipe concerned (for organizing: the titles and groups of your library) is sent via our server to Anthropic PBC, USA, and the result is returned to the app. Your email address and name are not sent. Under Anthropic's commercial terms this data is not used to train AI models. To prevent abuse, we log your user identifier, the feature and the time of each AI call; these entries are deleted automatically after 30 days. Legal basis: Art. 6(1)(b) GDPR, and our legitimate interest in secure, affordable operation (Art. 6(1)(f) GDPR) for abuse logging.</p>
 
   <h2>Service providers</h2>
   <ul>
-    <li><strong>Supabase Inc.</strong> – database, storage, sign-in and server functions; data is hosted in the EU (Frankfurt). Supabase processes technical access data (e.g. IP address, time) in server logs.</li>
+    <li><strong>Supabase Inc.</strong>, USA – database, storage, sign-in and server functions; data is hosted in the EU (Frankfurt). Supabase processes technical access data (e.g. IP address, time) in server logs.</li>
     <li><strong>Anthropic PBC</strong>, USA – processing of AI features.</li>
-    <li><strong>Apple</strong> – Sign in with Apple; Apple's privacy policy also applies.</li>
+    <li><strong>Apple Inc.</strong> – Sign in with Apple; Apple's privacy policy also applies.</li>
+    <li><strong>GitHub Inc.</strong>, USA – hosting of this website (GitHub Pages). GitHub processes technical access data such as your IP address to deliver and secure the site (Art. 6(1)(f) GDPR).</li>
   </ul>
-  <p>We have data processing agreements with our providers. Transfers to the USA rely on the EU Standard Contractual Clauses or the EU-U.S. Data Privacy Framework.</p>
+  <p>Data processing agreements or the providers' data processing terms are in place. Transfers to the USA rely on the EU-U.S. Data Privacy Framework or the EU Standard Contractual Clauses.</p>
 
-  <h2>Retention and deletion</h2>
-  <p>We keep account data and synced recipes until you delete them or your account. You can delete your account at any time in the app's settings; this removes all associated data from our servers and unlinks your Apple ID. <span class="todo">[phase 0]</span> Delete the app to remove local data.</p>
+  <h2>Retention and account deletion</h2>
+  <p>We keep account data, synced recipes and the shopping list until you delete them or your account. Share links and the AI log are deleted after 30 days.</p>
+  <p>You can delete your account at any time in the app under <em>Settings → Delete account</em>. This removes from our servers: your recipes (including those you shared with your household), your photos, your personal recipe details, your personal shopping list, your share and invite links, your AI log, your household membership and the account itself, and unlinks your Apple ID. A household you created passes to another member, or is deleted if you were the last member. Items on the shared shopping list belong to the household and remain for the other members. Recipes on your device are kept; delete the app to remove them.</p>
 
   <h2>Your rights</h2>
-  <p>You have the right to access, rectification, erasure, restriction, data portability (the app can export your recipes) and objection. Contact us at the email address above. You may also lodge a complaint with a data protection supervisory authority.</p>
+  <p>You have the right to access, rectification, erasure, restriction, data portability (the app can export your recipes) and to object to processing based on legitimate interests. Contact us at the email address above. You may also lodge a complaint with a data protection supervisory authority.</p>
+
+  <h2>Changes</h2>
+  <p>We update this policy when the app or the law changes. The version published here applies.</p>
   </section>
 </main>
 <footer class="site">

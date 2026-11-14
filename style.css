@@ -102,3 +102,8 @@ footer.site {
 }
 footer.site a { color: var(--fg-2); }
 .todo { background: #FFE58A; color: #2B2119; padding: 0 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 16px; }
+table.licenses { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+table.licenses th, table.licenses td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+table.licenses th { font-weight: 600; color: var(--fg-2); }
+table.licenses td:first-child { word-break: break-word; }
