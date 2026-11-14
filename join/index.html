@@ -86,25 +86,51 @@
 <body>
 <main>
   <div id="loading">
-    <h1>Mahlzeit wird ge&ouml;ffnet&hellip;</h1>
-    <p class="sub">Opening Mahlzeit&hellip;</p>
+    <h1 id="loading-title"></h1>
   </div>
 
   <div id="fallback">
     <h1 id="fallback-title">Mahlzeit</h1>
-    <p class="sub" id="fallback-sub">Recipe &amp; household app</p>
-    <p class="explain" id="explain">
-      Dieser Link l&auml;dt dich in einen gemeinsamen Haushalt in der Mahlzeit-App ein.<br>
-      This link invites you to join a shared household in the Mahlzeit app.
-    </p>
-    <a class="btn" id="retry" href="#">In App &ouml;ffnen &middot; Open in app</a>
+    <p class="sub" id="fallback-sub"></p>
+    <p class="explain" id="explain"></p>
+    <a class="btn" id="retry" href="#"></a>
     <a class="testflight" href="#">TestFlight</a>
-    <span class="note">TestFlight-Link folgt &middot; TestFlight link coming soon</span>
+    <span class="note" id="note"></span>
   </div>
 </main>
 
 <script>
   (function () {
+    // One language, picked from the reader's browser (German or English).
+    var de = /^de(-|$)/i.test((navigator.languages && navigator.languages[0]) || navigator.language || '');
+    var T = de ? {
+      title: 'Mahlzeit – Haushalt beitreten',
+      loading: 'Mahlzeit wird geöffnet…',
+      sub: 'Rezepte & Haushalt',
+      explain: 'Dieser Link lädt dich in einen gemeinsamen Haushalt in der Mahlzeit-App ein.',
+      open: 'In der App öffnen',
+      note: 'TestFlight-Link folgt',
+      invalidTitle: 'Ungültiger Link',
+      invalid: 'Dieser Link ist ungültig oder unvollständig.'
+    } : {
+      title: 'Mahlzeit – Join household',
+      loading: 'Opening Mahlzeit…',
+      sub: 'Recipe & household app',
+      explain: 'This link invites you to join a shared household in the Mahlzeit app.',
+      open: 'Open in app',
+      note: 'TestFlight link coming soon',
+      invalidTitle: 'Invalid link',
+      invalid: 'This link is invalid or incomplete.'
+    };
+    document.documentElement.lang = de ? 'de' : 'en';
+    document.title = T.title;
+    function set(id, text) { document.getElementById(id).textContent = text; }
+    set('loading-title', T.loading);
+    set('fallback-sub', T.sub);
+    set('explain', T.explain);
+    set('retry', T.open);
+    set('note', T.note);
+
     var token = location.hash.slice(1);
     var loading = document.getElementById('loading');
     var fallback = document.getElementById('fallback');
@@ -116,10 +142,9 @@
     }
 
     if (!token) {
-      document.getElementById('fallback-title').textContent = 'Ungültiger Link';
-      document.getElementById('fallback-sub').textContent = 'Invalid link';
-      document.getElementById('explain').innerHTML =
-        'Dieser Link ist ungültig oder unvollständig.<br>This link is invalid or incomplete.';
+      set('fallback-title', T.invalidTitle);
+      set('fallback-sub', '');
+      set('explain', T.invalid);
       retry.style.display = 'none';
       showFallback();
       return;
